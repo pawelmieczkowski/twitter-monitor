@@ -1,0 +1,33 @@
+:root {
+  --color-background-primary: #097dc2;
+  --color-background-secondary: #25263d;
+  --color-primary: white;
+  --color-secondary: #704A39;
+}
+
+.App {
+  text-align: center;
+  
+}
+button {
+  background-color: var(--color-primary);
+  border-radius: 6px;
+  border: 1px solid var(--color-secondary);
+  cursor: pointer;
+  color: var(--color-secondary);
+  font-size: 15px;
+  font-weight: bold;
+  padding: 5px 15px;
+  min-width: 50px;
+  text-decoration: none;
+  text-shadow: 0 1px 0 var(--color-primary);
+  &:hover {
+    background-color: #f1f1f1;
+  }
+  &:active {
+    position: relative;
+    top: 1px;
+  }
+}
+
+

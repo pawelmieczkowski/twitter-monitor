@@ -1,0 +1,16 @@
+/src/main/resources/config.properties
+/src/main/resources/public/
+/gradlew
+/gradlew.bat
+/HELP.md
+/settings.gradle
+/.project
+/.classpath
+/src/frontend/package-lock.json
+/src/frontend/README.md
+/src/frontend/yarn.lock
+/src/frontend/src/setupTests.js
+/src/frontend/src/reportWebVitals.js
+/src/frontend/src/App.test.js
+/src/frontend/node_modules/
+/src/frontend/build/
