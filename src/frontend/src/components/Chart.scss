@@ -47,6 +47,7 @@
     }
 
     .legend-wrapper {
+      position: relative;
       max-width: 250px;
       display: flex;
       flex-direction: column;
@@ -55,38 +56,37 @@
       margin: 10px;
       border-radius: 50px;
       background-color: var(--color-background-secondary);
-      .lang-list {
-        display: flex;
-        flex-direction: column;
-        flex: 1;
-        overflow:visible;
-        .list-header {
-          border-radius: 6px 6px 0 0;
-        }
-
-        .list-row {
+      .list-wrapper {
+        position: relative;
+        .lang-list {
           display: flex;
-          text-align: left;
-          padding: 1px 0;
-          color: var(--color-primary);
-          box-shadow: 0 1px 5px black;
-          :hover {
-            cursor: pointer;
+          flex-direction: column;
+          flex: 1;
+          overflow-y: auto;
+          .list-header {
+            border-radius: 6px 6px 0 0;
           }
-
-          .label-lang {
-            flex: 1;
-            padding-left: 5px;
+          .list-row {
+            display: flex;
+            text-align: left;
+            padding: 1px 0;
+            color: var(--color-primary);
+            box-shadow: 0 1px 5px black;
+            :hover {
+              cursor: pointer;
+            }
+            .label-lang {
+              flex: 1;
+              padding-left: 5px;
+            }
+            .label-value {
+              flex: 1;
+            }
           }
-
-
-          .label-value {
-            flex: 1;
+          
+          .grayed {
+            background-color: var(--color-secondary);
           }
-        }
-
-        .grayed {
-          background-color: var(--color-secondary);
         }
       }
 
@@ -103,12 +103,15 @@
 }
 
 .tooltip {
-  position: relative;
+  overflow: visible;
+
   display: inline-block;
   flex: 1;
   text-decoration: underline;
   text-decoration-style: dotted;
   .tooltip-text {
+    position: absolute;
+
     visibility: hidden;
     width: 150px;
     background-color: black;
@@ -117,10 +120,9 @@
     border-radius: 6px;
     padding: 5px 5px;
 
-    position: absolute;
     z-index: 1;
     bottom: 100%;
-    left: 50%;
+    left: 75%;
     margin-left: -120px;
   }
 

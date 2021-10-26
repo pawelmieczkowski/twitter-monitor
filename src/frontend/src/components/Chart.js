@@ -89,36 +89,38 @@ export const Chart = ({ langData, totalOccurrence, dataSet, setDataSet }) => {
             {totalOccurrence.length > 0 ? (
                 <div className="big-wrapper">
                     <div className="legend-wrapper">
-                        <div className={showLangQty === DEFAULT_SHOW_LANG_QTY ? "lang-list" : "lang-list max-height"}>
-                            <div className="list-row list-header grayed">
-                                <input type="checkbox" id="legend" onChange={handleChangeSelectAll} />
-                                <label htmlFor="legend" className="label-lang">LANG:</label>
-                                <div className="tooltip">
-                                    <label htmlFor="legend" className="label-value">OCC:</label>
-                                    <span className="tooltip-text">Totla number of occurrences in selected time period. Data gathered from 1% of tweets</span>
+                        <div className="list-wrapper">
+                            <div className={showLangQty === DEFAULT_SHOW_LANG_QTY ? "lang-list" : "lang-list max-height"}>
+                                <div className="list-row list-header grayed">
+                                    <input type="checkbox" id="legend" onChange={handleChangeSelectAll} />
+                                    <label htmlFor="legend" className="label-lang">LANG:</label>
+                                    <div className="tooltip">
+                                        <label htmlFor="legend" className="label-value">OCC:</label>
+                                        <span className="tooltip-text">Total number of occurrences in selected time period. Data gathered from 1% of all tweets</span>
+                                    </div>
                                 </div>
-                            </div>
-                            {totalOccurrence.map((lang, index) => {
-                                if (index < showLangQty) {
-                                    return (
-                                        <div key={lang} className={index % 2 === 0 ? "list-row" : "list-row grayed"} >
-                                            <input
-                                                type="checkbox"
-                                                id={lang[0]}
-                                                value={lang[0]}
-                                                name={lang[0]}
-                                                key={lang + selected}
-                                                onChange={handleChange}
-                                                defaultChecked={selected.includes(lang[0])} />
-                                            <label htmlFor={lang[0]} className="label-lang">{findFullLangName(lang[0])}</label>
-                                            <label htmlFor={lang[0]} className="label-value">{lang[1].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</label>
-                                        </div>
-                                    )
-                                } else {
-                                    return null;
+                                {totalOccurrence.map((lang, index) => {
+                                    if (index < showLangQty) {
+                                        return (
+                                            <div key={lang} className={index % 2 === 0 ? "list-row" : "list-row grayed"} >
+                                                <input
+                                                    type="checkbox"
+                                                    id={lang[0]}
+                                                    value={lang[0]}
+                                                    name={lang[0]}
+                                                    key={lang + selected}
+                                                    onChange={handleChange}
+                                                    defaultChecked={selected.includes(lang[0])} />
+                                                <label htmlFor={lang[0]} className="label-lang">{findFullLangName(lang[0])}</label>
+                                                <label htmlFor={lang[0]} className="label-value">{lang[1].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</label>
+                                            </div>
+                                        )
+                                    } else {
+                                        return null;
+                                    }
                                 }
-                            }
-                            )}
+                                )}
+                            </div>
                         </div>
                         <button className="button-show" onClick={onClickShowAll}>
                             {showLangQty === DEFAULT_SHOW_LANG_QTY ? "SHOW LESS POPULAR" : "HIDE LESS POPULAR"}
