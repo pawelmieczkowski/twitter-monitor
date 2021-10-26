@@ -4,16 +4,16 @@ import com.github.redouane59.twitter.IAPIEventListener;
 import com.github.redouane59.twitter.dto.tweet.Tweet;
 import com.pawemie.twittermonitor.model.RecordEntry;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 @Slf4j
+@Component
 public class IAPIEventListenerImpl implements IAPIEventListener {
 
     private final EntryProcessor entryProcessor;
-    private final TwitterStreamInvoker invoker;
 
-    public IAPIEventListenerImpl(EntryProcessor entryProcessor, TwitterStreamInvoker invoker) {
+    public IAPIEventListenerImpl(EntryProcessor entryProcessor) {
         this.entryProcessor = entryProcessor;
-        this.invoker = invoker;
     }
 
     @Override
@@ -34,6 +34,6 @@ public class IAPIEventListenerImpl implements IAPIEventListener {
     @Override
     public void onStreamEnded(Exception e) {
         log.error("Stream ended " + e.getMessage());
-        invoker.connectStream();
+        entryProcessor.reconnect();
     }
 }

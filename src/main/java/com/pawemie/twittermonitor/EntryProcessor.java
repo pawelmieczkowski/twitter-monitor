@@ -4,8 +4,8 @@ import com.pawemie.twittermonitor.model.Record;
 import com.pawemie.twittermonitor.model.RecordEntry;
 import com.pawemie.twittermonitor.model.RecordSet;
 import com.pawemie.twittermonitor.repository.RecordRepository;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -22,12 +22,18 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Component
-@AllArgsConstructor
 public class EntryProcessor {
 
-    RecordRepository recordRepository;
+    private final TwitterStreamInvoker invoker;
+
+    private final RecordRepository recordRepository;
 
     private final ConcurrentLinkedQueue<RecordEntry> entries = new ConcurrentLinkedQueue<>();
+
+    public EntryProcessor(RecordRepository recordRepository, @Lazy TwitterStreamInvoker invoker) {
+        this.recordRepository = recordRepository;
+        this.invoker = invoker;
+    }
 
     public void put(RecordEntry entry) {
         entries.add(entry);
@@ -35,12 +41,27 @@ public class EntryProcessor {
 
     @Scheduled(fixedRate = 60000, initialDelay = 60000)
     void runTasks() {
-        //TODO: stream is down, restart it?
         if (entries.isEmpty()) {
             log.error("There are no new entries");
+            this.reconnect();
             return;
         }
-        LocalDateTime periodStart = entries.peek().getCreatedAt();
+
+        LocalDateTime periodStart;
+        do {
+            periodStart = entries.peek().getCreatedAt();
+            if (periodStart == null) {
+                log.info("Date is missing from tweet, ignoring tweet.");
+                entries.poll();
+            } else {
+                break;
+            }
+        } while (!entries.isEmpty());
+        if (periodStart == null) {
+            log.error("Date is missing from all tweets, ignoring this tweets batch.");
+            return;
+        }
+
         LocalDateTime periodEnd = periodStart
                 .plusMinutes(1)
                 .minusSeconds(periodStart.getSecond());
@@ -59,6 +80,10 @@ public class EntryProcessor {
             if (recordSet != null)
                 recordRepository.save(recordSet, "minutes60");
         }
+    }
+
+    void reconnect() {
+        invoker.reconnect();
     }
 
     RecordSet processEveryMinute(LocalDateTime periodEnd) {
