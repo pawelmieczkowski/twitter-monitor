@@ -7,7 +7,7 @@ plugins {
 jar {
 	manifest {
 		attributes(
-				'Main-Class': 'com/pawemie/twittermonitor/TwitterMonitorApplication'
+				'Main-Class': 'com.pawemie.twittermonitor.TwitterMonitorApplication'
 		)
 	}
 }
