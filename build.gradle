@@ -4,13 +4,7 @@ plugins {
 	id 'java'
 }
 
-jar {
-	manifest {
-		attributes(
-				'Main-Class': 'com.pawemie.twittermonitor.TwitterMonitorApplication'
-		)
-	}
-}
+
 
 group = 'com.pawemie'
 version = '0.1.3-SNAPSHOT'
