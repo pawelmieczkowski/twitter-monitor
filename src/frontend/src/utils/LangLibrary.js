@@ -4,7 +4,11 @@
  */
 export const findFullLangName = (lang) => {
     if (lang !== null) {
-        return isoLangs[lang].name;
+        const langName = isoLangs[lang]?.name;
+        if (langName === undefined) {
+            return lang;
+        }
+        return langName;
     }
 }
 
@@ -736,5 +740,13 @@ const isoLangs = {
     "za": {
         "name": "Zhuang, Chuang",
         "nativeName": "Saɯ cueŋƅ, Saw cuengh"
+    },
+    "zxx": {
+        "name": "No lang",
+        "nativeName": "No linguistic content"
+    },
+    "art": {
+        "name": "Artificial languag",
+        "nativeName": "Artificial languages"
     }
 }
