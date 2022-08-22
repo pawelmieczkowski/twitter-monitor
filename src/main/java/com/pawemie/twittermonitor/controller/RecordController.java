@@ -33,11 +33,11 @@ public class RecordController {
 
     @GetMapping("recent-7D")
     public List<RecordSet> getRecentOneWeek() {
-        return recordService.getRecentInMinutes60(84);
+        return recordService.getRecentInMinutes60(168);
     }
 
     @GetMapping("recent-30D")
     public List<RecordSet> getRecentOneMonth() {
-        return recordService.getRecentInMinutes60(360);
+        return recordService.getRecentInMinutes60(720);
     }
 }
